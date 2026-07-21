@@ -1,0 +1,276 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* App */
+.main-container-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* navbar */
+.navbar {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #000;
+}
+
+.navbar-index,
+.navbar-sign {
+  display: flex;
+  gap: 20px;
+  letter-spacing: 0.2px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.navbar-index a,
+.navbar-sign a {
+  transition: all 0.3s ease;
+}
+
+.navbar-index a:hover {
+  color: rgba(12, 220, 239, 0.98);
+  font-size: 1.05rem;
+}
+
+.navbar-sign a:hover {
+  color: red;
+  font-size: 1.05rem;
+}
+
+/* Add form */
+.add-container {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid rgba(128, 128, 128, 0.256);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.add-container h3 {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.843);
+}
+
+/* AVATAR PICKER */
+.avatar-picker {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  border: none;
+  padding: 0;
+}
+
+.avatar-picker legend {
+  width: 100%;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.avatar-option {
+  cursor: pointer;
+  line-height: 0;
+}
+
+.avatar-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.avatar-option img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid transparent;
+  display: block;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.avatar-option img:hover {
+  transform: scale(1.08);
+}
+
+.avatar-option input:checked + img {
+  border-color: #4f46e5;
+}
+
+.add-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.add-container input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.add-container button {
+  padding: 10px 0;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: rgba(84, 136, 5, 0.945);
+  color: #fff;
+  margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-container button:hover {
+  opacity: 70%;
+}
+
+.add-container .cancel {
+  background-color: red;
+}
+
+/* Card */
+
+.container {
+  flex: 1;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid rgba(128, 128, 128, 0.256);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.card-layout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Student Card */
+
+.card {
+  border: 1px solid rgba(128, 128, 128, 0.364);
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  max-width: 220px;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.card img {
+  height: 120px;
+  width: 120px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  align-self: center;
+  object-fit: cover;
+}
+
+.info {
+  border-top: 1px solid rgba(128, 128, 128, 0.285);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.info h2 {
+  font-size: 16px;
+  margin-top: 14px;
+  color: rgba(0, 0, 0, 0.843);
+}
+
+.info p {
+  font-size: 12px;
+  color: grey;
+}
+
+.btn {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  margin-bottom: 10px;
+}
+
+.btn button {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn-edit {
+  background-color: rgba(0, 204, 255, 0.894);
+  color: #fff;
+}
+
+.btn-delete {
+  background-color: red;
+  color: #fff;
+}
+
+.btn button:hover {
+  opacity: 0.7;
+}
+
+/* Header */
+.header {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.089);
+  background: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid rgba(128, 128, 128, 0.191);
+  background: #fff;
+  font-size: 10px;
+  color: gray;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
