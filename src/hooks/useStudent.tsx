@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Students } from "../components/Card";
+import type { Students } from "../pages/Home";
 
 const useStudent = () => {
     const [students, setStudents] = useState<Students[]>([]);

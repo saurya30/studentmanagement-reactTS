@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import type { Students } from "./Card";
+import type { Students } from "../pages/Home";
+import { useNavigate } from "react-router-dom";
 
 const avatars = [
   "https://i.pravatar.cc/150?img=1",
@@ -9,79 +10,74 @@ const avatars = [
   "https://i.pravatar.cc/150?img=32",
 ];
 
-interface StudentProp  {
-    onAdd: (student: Students) => void;
-    editStudent: Students | null;
-    onUpdate: (student: Students) => void;
+interface StudentProp {
+  onAdd: (student: Students) => void;
+  editStudent: Students | null;
+  onUpdate: (student: Students) => void;
 }
 
-const AddStudentForm = ({onAdd, editStudent, onUpdate}:StudentProp) => {
+const AddStudentForm = ({ onAdd, editStudent, onUpdate }: StudentProp) => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [avatar, setAvatar] = useState(avatars[0]);
 
   useEffect(() => {
     if (editStudent) {
-        setName(editStudent.name);
-        setRole(editStudent.role);
-        setAvatar(editStudent.avatar);
+      setName(editStudent.name);
+      setRole(editStudent.role);
+      setAvatar(editStudent.avatar);
     }
-}, [editStudent]);
+  }, [editStudent]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if(editStudent){
-     const response = await fetch(
+    if (editStudent) {
+      const response = await fetch(
         `http://0.0.0.0:3000/students/${editStudent.id}`,
         {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name,
-                role,
-                avatar,
-            }),
-        }
-    );
-    const updatedStudent: Students = await response.json();
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            role,
+            avatar,
+          }),
+        },
+      );
+      const updatedStudent: Students = await response.json();
 
-    onUpdate(updatedStudent);
+      onUpdate(updatedStudent);
 
-     setName("");
-    setRole("");
-    setAvatar(avatars[0]);
+      navigate("/");
     } else {
-      const response = await fetch("http://0.0.0.0:3000/students",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(
-                {
-                    name, role, avatar
-                }
-            )
-        }
-    );
+      const response = await fetch("http://0.0.0.0:3000/students", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          role,
+          avatar,
+        }),
+      });
 
-    const addedStudent: Students = await response.json();
-    
-    onAdd(addedStudent);
+      const addedStudent: Students = await response.json();
 
-    setName("");
-    setRole("");
-    setAvatar(avatars[0]);
+      onAdd(addedStudent);
+
+      navigate("/");
     }
-
   };
 
   return (
     <div className="add-container">
-      <h3>{editStudent? "Edit Form" : "Add Form"}</h3>
+      <h3>{editStudent ? "Edit Form" : "Add Form"}</h3>
 
       <form onSubmit={handleSubmit}>
         <input
@@ -118,8 +114,12 @@ const AddStudentForm = ({onAdd, editStudent, onUpdate}:StudentProp) => {
           ))}
         </fieldset>
 
-        <button type="submit">{editStudent? "Update Student" : "Add Student"}</button>
-         <button type="submit" className="cancel">Cancel</button>
+        <button type="submit">
+          {editStudent ? "Update Student" : "Add Student"}
+        </button>
+        <button type="button" className="cancel" onClick={() => navigate("/")}>
+          Cancel
+        </button>
       </form>
     </div>
   );
