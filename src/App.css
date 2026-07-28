@@ -68,111 +68,6 @@ body {
   color: red;
 }
 
-/* Add form */
-.add-container {
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  border: 1px solid rgba(128, 128, 128, 0.256);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-}
-
-.add-container h3 {
-  font-size: 20px;
-  color: rgba(0, 0, 0, 0.843);
-}
-
-/* AVATAR PICKER */
-.avatar-picker {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-  border: none;
-  padding: 0;
-}
-
-.avatar-picker legend {
-  width: 100%;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #666;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-.avatar-option {
-  cursor: pointer;
-  line-height: 0;
-}
-
-.avatar-option input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.avatar-option img {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid transparent;
-  display: block;
-  transition:
-    border-color 0.2s,
-    transform 0.2s;
-}
-
-.avatar-option img:hover {
-  transform: scale(1.08);
-}
-
-.avatar-option input:checked + img {
-  border-color: #4f46e5;
-}
-
-.add-container form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.add-container input[type="text"] {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-sizing: border-box;
-}
-
-.add-container button {
-  padding: 10px 0;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-  font-size: 12px;
-  font-weight: 500;
-  background-color: rgba(84, 136, 5, 0.945);
-  color: #fff;
-  margin-top: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.add-container button:hover {
-  opacity: 70%;
-}
-
-.add-container .cancel {
-  background-color: red;
-}
-
 /* Card */
 
 .container {
@@ -439,4 +334,91 @@ body {
 .error-btn:hover {
   opacity: 0.85;
   transform: translateY(-2px);
+}
+
+/* add form */
+
+.page {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  background: #f7f8fc;
+}
+
+.add-container {
+  width: 100%;
+  max-width: 720px;
+  background: white;
+  border-radius: 18px;
+  padding: 35px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.add-container h3 {
+  text-align: left;
+  margin-bottom: 30px;
+  font-size: 22px;
+}
+
+.add-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Avatar */
+
+.avatar-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: 0.25s;
+  border: 3px solid transparent;
+}
+
+.avatar-img:hover {
+  transform: scale(1.08);
+}
+
+/* Selected avatar */
+
+.Mui-checked + .MuiFormControlLabel-label .avatar-img {
+  border-color: #1976d2;
+}
+
+/* Radio layout */
+
+.MuiRadioGroup-root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.MuiFormControlLabel-root {
+  margin: 0 !important;
+}
+
+/* Space above buttons */
+
+.add-container .MuiButton-root {
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+/* Make TextFields consistent */
+
+.MuiTextField-root {
+  width: 100%;
+}
+
+/* Form Label */
+
+.MuiFormLabel-root {
+  font-weight: 600 !important;
+  margin-bottom: 10px;
 }

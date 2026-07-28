@@ -1,6 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { Students } from "../pages/Home";
 import { useNavigate } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import {
+  Button,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+} from "@mui/material";
+import { studentSchema, type StudentFormData } from "../schema/studentSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const avatars = [
   "https://i.pravatar.cc/150?img=1",
@@ -19,21 +32,28 @@ interface StudentProp {
 const AddStudentForm = ({ onAdd, editStudent, onUpdate }: StudentProp) => {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
-  const [avatar, setAvatar] = useState(avatars[0]);
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<StudentFormData>({
+    resolver: zodResolver(studentSchema),
+    defaultValues: { name: "", role: "", avatar: avatars[0] },
+  });
 
   useEffect(() => {
     if (editStudent) {
-      setName(editStudent.name);
-      setRole(editStudent.role);
-      setAvatar(editStudent.avatar);
+      reset({
+        name: editStudent.name,
+        role: editStudent.role,
+        avatar: editStudent.avatar,
+      });
     }
-  }, [editStudent]);
+  }, [editStudent, reset]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  async function handleSubmission(data: StudentFormData) {
     if (editStudent) {
       const response = await fetch(
         `http://0.0.0.0:3000/students/${editStudent.id}`,
@@ -42,11 +62,7 @@ const AddStudentForm = ({ onAdd, editStudent, onUpdate }: StudentProp) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            name,
-            role,
-            avatar,
-          }),
+          body: JSON.stringify(data),
         },
       );
       const updatedStudent: Students = await response.json();
@@ -60,11 +76,7 @@ const AddStudentForm = ({ onAdd, editStudent, onUpdate }: StudentProp) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name,
-          role,
-          avatar,
-        }),
+        body: JSON.stringify(data),
       });
 
       const addedStudent: Students = await response.json();
@@ -73,54 +85,72 @@ const AddStudentForm = ({ onAdd, editStudent, onUpdate }: StudentProp) => {
 
       navigate("/");
     }
-  };
+  }
 
   return (
     <div className="add-container">
-      <h3>{editStudent ? "Edit Form" : "Add Form"}</h3>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
+      {" "}
+      <h3>{editStudent ? "Edit Form" : "Add Form"}</h3>{" "}
+      <form onSubmit={handleSubmit(handleSubmission)}>
+        {" "}
+        <TextField
+          label="Name"
+          size="small"
+          fullWidth
           placeholder="Enter your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+          {...register("name")}
+          error={!!errors.name}
+          helperText={errors.name?.message}
+        />{" "}
+        <TextField
+          label="Role"
+          size="small"
+          fullWidth
+          {...register("role")}
+          error={!!errors.role}
+          helperText={errors.role?.message}
+        />{" "}
+        <FormControl error={!!errors.avatar}>
+          <FormLabel>Select an Avatar</FormLabel>
 
-        <input
-          type="text"
-          placeholder="Enter your role"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          required
-        />
+          <Controller
+            name="avatar"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup {...field} row>
+                {avatars.map((url) => (
+                  <FormControlLabel
+                    key={url}
+                    value={url}
+                    control={<Radio />}
+                    label={
+                      <img
+                        src={url}
+                        alt="Avatar option"
+                        className="avatar-img"
+                      />
+                    }
+                  />
+                ))}
+              </RadioGroup>
+            )}
+          />
 
-        <fieldset className="avatar-picker">
-          <legend>Choose an avatar</legend>
-
-          {avatars.map((img) => (
-            <label key={img} className="avatar-option">
-              <input
-                type="radio"
-                name="avatar"
-                value={img}
-                checked={avatar === img}
-                onChange={() => setAvatar(img)}
-              />
-
-              <img src={img} alt="Avatar" />
-            </label>
-          ))}
-        </fieldset>
-
-        <button type="submit">
+          <FormHelperText>{errors.avatar?.message}</FormHelperText>
+        </FormControl>
+        <Button type="submit" variant="contained" size="large">
           {editStudent ? "Update Student" : "Add Student"}
-        </button>
-        <button type="button" className="cancel" onClick={() => navigate("/")}>
+        </Button>
+        <Button
+          type="button"
+          variant="contained"
+          color="error"
+          size="large"
+          onClick={() => navigate("/")}
+        >
           Cancel
-        </button>
-      </form>
+        </Button>
+      </form>{" "}
     </div>
   );
 };
