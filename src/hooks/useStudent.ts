@@ -1,15 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { Students } from "../pages/Home";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
-import { handleStudents } from "../store/studentSlice";
+import {
+  handleStudents,
+  addStudent,
+  deleteStudent,
+  updateStudent,
+  setEditingStudent,
+} from "../store/studentSlice";
 
 const useStudent = () => {
-  const [students, setStudents] = useState<Students[]>([]);
-  const [editStudent, setEditStudent] = useState<Students | null>(null);
+  // const [students, setStudents] = useState<Students[]>([]);
+  // const [editStudent, setEditStudent] = useState<Students | null>(null);
 
   const dispatch = useDispatch();
-  const student = useSelector((state: RootState) => state.student.students);
+  const students = useSelector((state: RootState) => state.student.students);
+  const editingStudent = useSelector(
+    (state: RootState) => state.student.editStudents,
+  );
 
   useEffect(() => {
     (async () => {
@@ -27,28 +36,24 @@ const useStudent = () => {
         console.log(error);
       }
     })();
-  }, []);
+  }, [dispatch]);
 
   const handleDelete = async (id: number) => {
-    setStudents((prev) => prev.filter((student) => student.id !== id));
+    dispatch(deleteStudent(id));
   };
 
   const handleAdd = (student: Students) => {
-    setStudents((prev) => [...prev, student]);
+    dispatch(addStudent(student));
   };
 
   const handleEdit = (student: Students) => {
-    setEditStudent(student);
+    dispatch(setEditingStudent(student));
   };
 
   const handleUpdate = (updatedStudent: Students) => {
-    setStudents((prev) =>
-      prev.map((student) =>
-        student.id === updatedStudent.id ? updatedStudent : student,
-      ),
-    );
+    dispatch(updateStudent(updatedStudent));
 
-    setEditStudent(null);
+    dispatch(setEditingStudent(null));
   };
 
   return {
@@ -57,7 +62,7 @@ const useStudent = () => {
     handleEdit,
     handleUpdate,
     students,
-    editStudent,
+    editingStudent,
   };
 };
 
