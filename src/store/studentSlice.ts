@@ -3,6 +3,7 @@ import type { Students } from "../pages/Home";
 
 interface StudentState {
   students: Students[];
+
   editStudents: Students | null;
 }
 

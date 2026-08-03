@@ -1,7 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { useThemeContext } from "../context/themeContext";
+import { Button } from "@mui/material";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const { mode, toggleTheme } = useThemeContext();
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -28,6 +32,9 @@ const Navbar = () => {
         <button className="logout-btn" onClick={handleLogout}>
           Logout
         </button>
+        <Button variant="outlined" onClick={toggleTheme}>
+          {mode === "light" ? "Dark Mode" : "Light Mode"}
+        </Button>
       </div>
     </nav>
   );

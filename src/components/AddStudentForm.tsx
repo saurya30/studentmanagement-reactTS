@@ -94,7 +94,7 @@ const AddStudentForm = ({ onAdd, editStudent, onUpdate }: StudentProp) => {
       <form onSubmit={handleSubmit(handleSubmission)}>
         {" "}
         <TextField
-          label="Name"
+          label={editStudent ? "" : "Name"}
           size="small"
           fullWidth
           placeholder="Enter your name"
@@ -103,7 +103,7 @@ const AddStudentForm = ({ onAdd, editStudent, onUpdate }: StudentProp) => {
           helperText={errors.name?.message}
         />{" "}
         <TextField
-          label="Role"
+          label={editStudent ? "" : "Role"}
           size="small"
           fullWidth
           {...register("role")}
